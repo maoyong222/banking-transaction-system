@@ -15,3 +15,7 @@ spring-boot-starter-test    ：单元测试相关依赖 <br>
 com.h2database ：h2数据库 <br>
 spring-boot-starter-actuator ：监控相关依赖 <br>
 spring-boot-starter-aop ：aop相关依赖 <br>
+
+
+压测结果可见： <BR>
+https://github.com/maoyong222/banking-transaction-system/blob/main/Gatling%20Stats%20-%20Global%20Information.pdf
