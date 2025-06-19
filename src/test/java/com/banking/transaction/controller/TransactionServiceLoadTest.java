@@ -1,19 +1,22 @@
 package com.banking.transaction.controller;
 
-import io.gatling.javaapi.core.*;
-import io.gatling.javaapi.http.*;
+import io.gatling.javaapi.core.ScenarioBuilder;
+import io.gatling.javaapi.core.Simulation;
+import io.gatling.javaapi.http.HttpProtocolBuilder;
+
 import static io.gatling.javaapi.core.CoreDsl.*;
-import static io.gatling.javaapi.http.HttpDsl.*;
+import static io.gatling.javaapi.http.HttpDsl.http;
+import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class TransactionServiceLoadTest extends Simulation {
 
-    private HttpProtocolBuilder httpProtocol = http
+    private final HttpProtocolBuilder httpProtocol = http
             .baseUrl("http://localhost:8080")
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
     // 测试创建交易并获取该交易的场景
-    private ScenarioBuilder createAndGetTransactionScenario = scenario("Create and Get Transaction")
+    private final ScenarioBuilder createAndGetTransactionScenario = scenario("Create and Get Transaction")
             .exec(http("Create Transaction")
                     .post("/api/transactions")
                     .body(StringBody("""
@@ -34,7 +37,7 @@ public class TransactionServiceLoadTest extends Simulation {
             );
 
     // 测试获取交易列表的场景（独立场景）
-    private ScenarioBuilder listTransactionsScenario = scenario("List Transactions")
+    private final ScenarioBuilder listTransactionsScenario = scenario("List Transactions")
             .exec(http("Get Transactions")
                     .get("/api/transactions?page=0&size=10")
                     .check(status().is(200))
