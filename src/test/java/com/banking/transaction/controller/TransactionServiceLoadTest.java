@@ -12,8 +12,8 @@ public class TransactionServiceLoadTest extends Simulation {
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
-    // 测试创建交易的场景
-    private ScenarioBuilder createTransactionScenario = scenario("Create Transaction")
+    // 测试创建交易并获取该交易的场景
+    private ScenarioBuilder createAndGetTransactionScenario = scenario("Create and Get Transaction")
             .exec(http("Create Transaction")
                     .post("/api/transactions")
                     .body(StringBody("""
@@ -26,28 +26,27 @@ public class TransactionServiceLoadTest extends Simulation {
                 }
                 """))
                     .check(status().is(201))
+                    .check(jsonPath("$.id").saveAs("transactionId")) // 保存返回的ID
+            )
+            .exec(http("Get Single Transaction")
+                    .get("/api/transactions/${transactionId}") // 使用保存的ID
+                    .check(status().is(200))
             );
 
-    // 测试获取交易列表的场景
+    // 测试获取交易列表的场景（独立场景）
     private ScenarioBuilder listTransactionsScenario = scenario("List Transactions")
             .exec(http("Get Transactions")
                     .get("/api/transactions?page=0&size=10")
                     .check(status().is(200))
             );
 
-    // 测试获取单个交易的场景
-    private ScenarioBuilder getTransactionScenario = scenario("Get Transaction")
-            .exec(http("Get Single Transaction")
-                    .get("/api/transactions/${transactionId}")
-                    .check(status().is(200))
-            );
-
     {
         // 设置负载测试配置
         setUp(
-                createTransactionScenario.injectOpen(rampUsers(100).during(10)),
-                listTransactionsScenario.injectOpen(rampUsers(500).during(30)),
-                getTransactionScenario.injectOpen(rampUsers(300).during(20))
+                // 执行创建并获取场景
+                createAndGetTransactionScenario.injectOpen(rampUsers(300).during(20)),
+                // 独立执行列表场景
+                listTransactionsScenario.injectOpen(rampUsers(500).during(30))
         ).protocols(httpProtocol);
     }
 }
