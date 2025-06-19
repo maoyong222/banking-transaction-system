@@ -18,7 +18,6 @@ public class Transaction  {
 
     private String type; // "DEPOSIT", "WITHDRAWAL", "TRANSFER"
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Timestamp timestamp;
 
     private String description;

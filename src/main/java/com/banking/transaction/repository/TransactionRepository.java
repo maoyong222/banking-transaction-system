@@ -17,7 +17,7 @@ public class TransactionRepository {
     @Cacheable("transactions")
     public List<Transaction> findAll(int page, int size) {
         return transactionMap.values().stream()
-                .sorted(Comparator.comparing(Transaction::getId).reversed())
+                .sorted(Comparator.comparing(Transaction::getTimestamp).reversed())
                 .skip((long) page * size)
                 .limit(size)
                 .collect(Collectors.toList());
