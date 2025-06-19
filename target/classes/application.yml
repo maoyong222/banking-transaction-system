@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: transaction-management
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.banking.transaction: DEBUG

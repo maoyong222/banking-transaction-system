@@ -1,0 +1,155 @@
+{
+  "info": {
+    "name": "Banking Transaction API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"accountNumber\": \"1234567890\",\n    \"amount\": 1000.00,\n    \"transactionType\": \"DEPOSIT\",\n    \"description\": \"Salary deposit\",\n    \"transactionDate\": \"2025-06-18T12:00:00Z\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/transactions",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transactions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Transactions",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/transactions?page=0&size=10",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transactions"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Transaction by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/transactions/{{transactionId}}",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transactions",
+            "{{transactionId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Transaction",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"amount\": 1500.00,\n    \"description\": \"Updated salary deposit\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/transactions/{{transactionId}}",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transactions",
+            "{{transactionId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Transaction",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8080/api/transactions/{{transactionId}}",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "transactions",
+            "{{transactionId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Transactions by Account",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/accounts/{{accountNumber}}/transactions",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "accounts",
+            "{{accountNumber}}",
+            "transactions"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "transactionId",
+      "value": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    {
+      "key": "accountNumber",
+      "value": "1234567890"
+    }
+  ]
+}
